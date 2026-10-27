@@ -1,0 +1,229 @@
+:root {
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-display: "Outfit", var(--font-body);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --text: #f8fafc;
+  --text-muted: #cbd5e1;
+  --accent: #818cf8;
+  --accent-2: #2dd4bf;
+  --x-color: #7dd3fc;
+  --o-color: #f9a8d4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: linear-gradient(160deg, #0f172a 0%, #312e81 50%, #115e59 100%);
+  background-attachment: fixed;
+}
+
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.32;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-blob-a {
+  width: 320px;
+  height: 320px;
+  background: var(--accent);
+  top: -40px;
+  left: -30px;
+}
+
+.bg-blob-b {
+  width: 280px;
+  height: 280px;
+  background: var(--accent-2);
+  bottom: -30px;
+  right: -20px;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 22rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.page-help {
+  max-width: 38rem;
+}
+
+.page-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #c7d2fe;
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(129, 140, 248, 0.45);
+  background: rgba(129, 140, 248, 0.12);
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  width: 3.25rem;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--accent), #6366f1);
+  margin-bottom: 0.65rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 5vw, 2.1rem);
+  margin: 0;
+}
+
+.tagline {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  padding: 1rem 1.15rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.turn-text {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.result-text {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.result-text.is-win {
+  color: #86efac;
+}
+
+.result-text.is-tie {
+  color: #fde047;
+}
+
+.error {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  color: #fca5a5;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.55rem;
+  cursor: pointer;
+  padding: 0.45rem 0.85rem;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.cell {
+  aspect-ratio: 1;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 12vw, 2.75rem);
+  font-weight: 700;
+  border-radius: 0.85rem;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.cell:hover:not(:disabled) {
+  transform: scale(1.02);
+  border-color: rgba(129, 140, 248, 0.55);
+}
+
+.cell:disabled {
+  cursor: default;
+  opacity: 0.95;
+}
+
+.cell.is-x {
+  color: var(--x-color);
+}
+
+.cell.is-o {
+  color: var(--o-color);
+}
+
+.help h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem;
+  text-align: left;
+}
+
+.help p {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-align: left;
+  margin: 0;
+}
+
+.board-key {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(15, 23, 42, 0.45);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: #e2e8f0;
+}
+
+.help strong {
+  color: #c7d2fe;
+}
