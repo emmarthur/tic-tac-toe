@@ -4,7 +4,23 @@ const errorEl = document.getElementById("error-text");
 const newBtn = document.getElementById("btn-new");
 const cells = document.querySelectorAll(".cell");
 
+const SESSION_KEY = "tic-tac-toe-v1";
+
 let state = null;
+
+function persistState() {
+  if (state) AppSession.save(SESSION_KEY, state);
+}
+
+function restoreState() {
+  const saved = AppSession.load(SESSION_KEY);
+  if (!saved?.board) return false;
+  state = saved;
+  render();
+  return true;
+}
+
+AppSession.wireHelpSave(SESSION_KEY, () => state);
 
 function setError(message) {
   errorEl.hidden = !message;
@@ -46,8 +62,10 @@ async function resetGame() {
     const res = await fetch("/api/reset", { method: "POST" });
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || "Could not reset.");
+    AppSession.clear(SESSION_KEY);
     state = data;
     render();
+    persistState();
   } catch (err) {
     setError(err.message || "Could not reset.");
   }
@@ -66,6 +84,7 @@ async function playSpace(space) {
     if (!res.ok) throw new Error(data.detail || "Invalid move.");
     state = data;
     render();
+    persistState();
   } catch (err) {
     setError(err.message || "Invalid move.");
   }
@@ -77,4 +96,4 @@ cells.forEach((cell) => {
 
 newBtn.addEventListener("click", () => resetGame());
 
-resetGame();
+if (!restoreState()) resetGame();
